@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name="analise", url = "${analise.host}")
-public interface ConsultaDadosSolicitanteClient {
+public interface AnaliseClient {
 	
-	@PostMapping
+	@PostMapping("/api/solicitacao")
 	AnaliseResponse solicitaAnalise(@RequestBody AnaliseRequest request);
 }

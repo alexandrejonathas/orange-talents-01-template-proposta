@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -35,13 +36,14 @@ public class NovaPropostaRequest {
 	@NotNull
 	@PositiveOrZero
 	private BigDecimal salario;
-	
+
+	@Valid
+	@NotNull
 	@JsonProperty
-	@NotBlank
-	private String endereco;
+	private EnderecoRequest endereco;
 
 	public NovaPropostaRequest(String documento, String email, String nome, 
-			BigDecimal salario, String endereco) {
+			BigDecimal salario, EnderecoRequest endereco) {
 		this.documento = documento;
 		this.email = email;
 		this.nome = nome;
@@ -50,7 +52,8 @@ public class NovaPropostaRequest {
 	}
 
 	public Proposta toModel() {
-		return new Proposta(documento, email, nome, salario, endereco);		
+		return new Proposta(documento, email, nome,
+				salario, endereco.toModel());
 	}
 
 	public boolean existeUmaPropostaParaODocumento(EntityManager em) {
@@ -62,5 +65,8 @@ public class NovaPropostaRequest {
 		
 		return !lista.isEmpty();
 	}
-	
+
+	public EnderecoRequest getEndereco() {
+		return endereco;
+	}
 }

@@ -2,13 +2,8 @@ package br.com.zup.propostas.proposta;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -35,9 +30,11 @@ public class Proposta {
 	@NotNull 
 	@PositiveOrZero 
 	private BigDecimal salario;
-	
-	@NotBlank 
-	private String endereco;
+
+	@Valid
+	@NotNull
+	@Embedded
+	private Endereco endereco;
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -47,7 +44,7 @@ public class Proposta {
 	public Proposta() {}
 	
 	public Proposta(@NotBlank String documento, @NotBlank @Email String email, @NotBlank String nome,
-			@NotNull @PositiveOrZero BigDecimal salario, @NotBlank String endereco) {
+			@NotNull @PositiveOrZero BigDecimal salario, @NotBlank Endereco endereco) {
 				this.documento = documento;
 				this.email = email;
 				this.nome = nome;
