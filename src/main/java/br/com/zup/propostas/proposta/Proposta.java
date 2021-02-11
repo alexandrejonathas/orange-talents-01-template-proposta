@@ -1,5 +1,8 @@
 package br.com.zup.propostas.proposta;
 
+import br.com.zup.propostas.cartao.Cartao;
+import br.com.zup.propostas.cartao.NovoCartaoResponse;
+
 import java.math.BigDecimal;
 
 import javax.persistence.*;
@@ -40,6 +43,9 @@ public class Proposta {
 	@Enumerated(EnumType.STRING)
 	private EstadoProposta estado = EstadoProposta.CRIADO;
 
+	@OneToOne(mappedBy = "proposta", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Cartao cartao;
+
 	@Deprecated
 	public Proposta() {}
 	
@@ -56,7 +62,15 @@ public class Proposta {
 	public String toString() {
 		return "Proposta [id="+id+ "documento="+documento+", email="+email+", nome="+nome+", salario="+salario+", endereco="+endereco+"]";
 	}
-	
+
+	public void atualizaEstado(EstadoProposta estado) {
+		this.estado = estado;
+	}
+
+	public void associaCartao(NovoCartaoResponse response) {
+		this.cartao = new Cartao(response.getId(), response.getTitular(), response.getEmitidoEm(), response.getLimite(), this);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -64,12 +78,12 @@ public class Proposta {
 	public String getDocumento() {
 		return documento;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
-	public void atualizaEstado(EstadoProposta estado) {
-		this.estado = estado;
+
+	public Cartao getCartao() {
+		return cartao;
 	}
 }

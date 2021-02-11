@@ -7,8 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 import br.com.zup.propostas.cartao.CartaoClient;
-import br.com.zup.propostas.cartao.NovoCartaoRequest;
-import br.com.zup.propostas.cartao.NovoCartaoResponse;
+import br.com.zup.propostas.exceptionhandler.FieldErrorOutput;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,34 +28,30 @@ public class CadastroPropostaController {
 	private EntityManager em;
 	
 	@Autowired
-	private AnaliseClient consultaDadosSolicitanteClient;
+	private AnaliseClient analiseClient;
 
 	@Autowired
 	private CartaoClient cartaoClient;
 
 	@Transactional
 	@PostMapping("/propostas")
-	public ResponseEntity<?> cadastra(@RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<?> cadastra(@RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder uriBuilder) throws InterruptedException {
 		
 		if(request.existeUmaPropostaParaODocumento(em)) {
-			return ResponseEntity.unprocessableEntity().build();
+			return ResponseEntity.unprocessableEntity()
+					.body(new FieldErrorOutput("documento", "Já existe uma proposta cadastrada para o documento "+request.getDocumento()));
 		}
 		
 		Proposta proposta = request.toModel();
 		em.persist(proposta);
 
 		try {
-			AnaliseResponse resultadoAnalise = consultaDadosSolicitanteClient.solicitaAnalise(new AnaliseRequest(proposta));
+			AnaliseResponse resultadoAnalise = analiseClient.solicitaAnalise(new AnaliseRequest(proposta));
 			proposta.atualizaEstado(resultadoAnalise.getResultadoSolicitacao().getEstado());
 		}catch(FeignException.UnprocessableEntity ex) {
 			proposta.atualizaEstado(EstadoProposta.NAO_ELEGIVEL);
 		}
 		em.persist(proposta);
-
-		//TODO: Aqui deveria retornar os dados do cartão criado, segundo a documentação da API
-		NovoCartaoResponse response = cartaoClient.cadastra(new NovoCartaoRequest(proposta));
-
-		System.out.println(">>>"+response);
 
 		URI location = uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
 		return ResponseEntity.created(location).build();

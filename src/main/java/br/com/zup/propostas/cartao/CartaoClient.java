@@ -1,12 +1,11 @@
 package br.com.zup.propostas.cartao;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "criaCartao", url = "${accounts.host}")
+@FeignClient(name = "cartao", url = "${accounts.host}")
 public interface CartaoClient {
 
-    @PostMapping("/api/cartoes")
-    NovoCartaoResponse cadastra(@RequestBody NovoCartaoRequest request);
+    @GetMapping("/api/cartoes")
+    NovoCartaoResponse consulta(@RequestParam Long idProposta);
 }

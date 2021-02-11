@@ -69,4 +69,8 @@ public class NovaPropostaRequest {
 	public EnderecoRequest getEndereco() {
 		return endereco;
 	}
+
+    public String getDocumento() {
+		return documento;
+    }
 }

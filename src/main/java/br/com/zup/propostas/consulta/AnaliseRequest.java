@@ -7,7 +7,7 @@ import br.com.zup.propostas.proposta.Proposta;
 public class AnaliseRequest {
 
 	@JsonProperty
-	private String propostaId;
+	private Long idProposta;
 	
 	@JsonProperty
 	private String documento;
@@ -16,9 +16,8 @@ public class AnaliseRequest {
 	private String nome;
 
 	public AnaliseRequest(Proposta proposta) {
-		this.propostaId = String.valueOf(proposta.getId());
+		this.idProposta = proposta.getId();
 		this.documento = proposta.getDocumento();
 		this.nome = proposta.getNome();
 	}
-	
 }
