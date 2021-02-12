@@ -21,6 +21,7 @@
 		<java.version>11</java.version>
 		<encoding>UTF-8</encoding>
 		<spring-cloud.version>2020.0.1</spring-cloud.version>
+		<common-codec.version>1.9</common-codec.version>
 	</properties>	
 	
 	<dependencies>
@@ -60,6 +61,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${common-codec.version}</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<dependencyManagement>
