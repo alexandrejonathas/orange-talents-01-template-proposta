@@ -34,8 +34,8 @@ public class ConsultaCartaoTask {
         for(Proposta proposta : propostas) {
             try {
                 NovoCartaoResponse response = cartaoClient.consulta(proposta.getId());
-                log.info(response.toString());
                 proposta.associaCartao(response);
+                repository.save(proposta);
             }catch (FeignException ex){
                 log.info("Não encontrou um cartão para a proposta: "+proposta.getId());
             }

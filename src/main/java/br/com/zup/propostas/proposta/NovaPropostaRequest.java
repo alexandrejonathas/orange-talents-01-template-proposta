@@ -56,16 +56,6 @@ public class NovaPropostaRequest {
 				salario, endereco.toModel());
 	}
 
-	public boolean existeUmaPropostaParaODocumento(EntityManager em) {
-		Query query = em.createQuery("select 1 from Proposta where documento = :documento");
-		query.setParameter("documento", documento);
-		var lista = query.getResultList();
-		
-		Assert.state(lista.size() <= 1, "Já existe uma proposta cadastrada para o documento: "+documento);
-		
-		return !lista.isEmpty();
-	}
-
 	public EnderecoRequest getEndereco() {
 		return endereco;
 	}

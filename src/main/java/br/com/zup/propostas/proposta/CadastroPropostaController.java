@@ -1,6 +1,7 @@
 package br.com.zup.propostas.proposta;
 
 import java.net.URI;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,8 +25,8 @@ import br.com.zup.propostas.consulta.AnaliseClient;
 @RestController
 public class CadastroPropostaController {
 
-	@PersistenceContext
-	private EntityManager em;
+	@Autowired
+	private PropostaRepository repository;
 	
 	@Autowired
 	private AnaliseClient analiseClient;
@@ -33,17 +34,16 @@ public class CadastroPropostaController {
 	@Autowired
 	private CartaoClient cartaoClient;
 
-	@Transactional
 	@PostMapping("/propostas")
 	public ResponseEntity<?> cadastra(@RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder uriBuilder) throws InterruptedException {
-		
-		if(request.existeUmaPropostaParaODocumento(em)) {
+		Optional<Proposta> possivelProposta = repository.findByDocumento(request.getDocumento());
+		if(possivelProposta.isPresent()) {
 			return ResponseEntity.unprocessableEntity()
 					.body(new FieldErrorOutput("documento", "Já existe uma proposta cadastrada para o documento "+request.getDocumento()));
 		}
 		
 		Proposta proposta = request.toModel();
-		em.persist(proposta);
+		repository.save(proposta);
 
 		try {
 			AnaliseResponse resultadoAnalise = analiseClient.solicitaAnalise(new AnaliseRequest(proposta));
@@ -51,7 +51,7 @@ public class CadastroPropostaController {
 		}catch(FeignException.UnprocessableEntity ex) {
 			proposta.atualizaEstado(EstadoProposta.NAO_ELEGIVEL);
 		}
-		em.persist(proposta);
+		repository.save(proposta);
 
 		URI location = uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
 		return ResponseEntity.created(location).build();
