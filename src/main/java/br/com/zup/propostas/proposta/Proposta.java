@@ -86,4 +86,20 @@ public class Proposta {
 	public Cartao getCartao() {
 		return cartao;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public BigDecimal getSalario() {
+		return salario;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public EstadoProposta getEstado() {
+		return estado;
+	}
 }

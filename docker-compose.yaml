@@ -1,0 +1,37 @@
+version: '3.5'
+services:
+
+  proposta-api:
+    build:
+      dockerfile: api.dockerfile
+      context: .
+    depends_on:
+      - proposta-db
+    image: jonathas.lima/proposta-api
+    container_name: proposta-api
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DATABASE_URL=jdbc:mysql://proposta-db:3306/propostas?createDatabaseIfNotExist=true
+      - DATABASE_USERNAME=userapi
+      - DATABASE_PASSWORD=passapi
+
+  proposta-db:
+    image: 'mysql:5.7'
+    container_name: proposta-db
+    expose:
+      - 3306
+    ports:
+      - 13306:3306
+    #volumes:
+      #- mysql-volume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=propostas
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=userapi
+      - MYSQL_PASSWORD=passapi
+
+#volumes:
+  #mysql-volume:
