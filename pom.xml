@@ -22,6 +22,7 @@
 		<encoding>UTF-8</encoding>
 		<spring-cloud.version>2020.0.1</spring-cloud.version>
 		<common-codec.version>1.9</common-codec.version>
+		<spring-security-oauth2.version>2.4.2</spring-security-oauth2.version>
 	</properties>	
 	
 	<dependencies>
@@ -68,6 +69,17 @@
 			<artifactId>commons-codec</artifactId>
 			<version>${common-codec.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>-->
+
 
 
 	</dependencies>
