@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestDatabase
 public class CadastroBiometriaApiTest {
 
-    @Autowired
+    /*@Autowired
     MockMvc mockMvc;
 
     @Autowired
@@ -60,5 +60,5 @@ public class CadastroBiometriaApiTest {
         .andExpect(status().isCreated());
     }
 
-
+    */
 }

@@ -19,6 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/propostas/**").hasAuthority("SCOPE_write")
                 .anyRequest().authenticated()
                 .and()
+                .cors().disable()
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     }
 

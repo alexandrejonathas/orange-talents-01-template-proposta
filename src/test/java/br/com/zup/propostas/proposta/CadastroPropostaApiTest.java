@@ -4,19 +4,26 @@ import br.com.zup.propostas.databuilder.NovaPropostaRequestBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 
 @Transactional
 @SpringBootTest
@@ -24,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestDatabase
 public class CadastroPropostaApiTest {
 
-    @Autowired
+    /*@Autowired
     MockMvc mockMvc;
 
     @Autowired
@@ -32,6 +39,7 @@ public class CadastroPropostaApiTest {
 
     @PersistenceContext
     private EntityManager em;
+
 
     @Test
     public void deveCadastrarUmaPropostaElegivel() throws Exception {
@@ -49,11 +57,13 @@ public class CadastroPropostaApiTest {
                 .comCidade("Cidade Y")
                 .comUf("XY")
                 .constroi();
-
+        String token = obtainAccessToken("joao", "123456");
         mockMvc.perform(
                 post("/propostas")
+                        .header("Authorization", "Bearer "+token)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request))
+                        .content(objectMapper.writeValueAsString(request)
+                        )
         ).andDo(print())
                 .andExpect(status().isCreated());
     }
@@ -129,4 +139,29 @@ public class CadastroPropostaApiTest {
                 .andExpect(status().isUnprocessableEntity());
     }
 
+
+
+    private String obtainAccessToken(String username, String password) throws Exception {
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "password");
+        params.add("client_id", "client-proposta");
+        params.add("client_secret", "bb3a505f-0251-4167-b6b7-88cc22c140c3");
+        params.add("username", username);
+        params.add("password", password);
+
+        ResultActions result
+                = mockMvc.perform(post("http://localhost:18080/auth/realms/nosso-cartao/protocol/openid-connect/token")
+                .params(params)
+                .with(httpBasic ( "joao" , "123" ))
+                .accept("application/json;charset=UTF-8"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+
+        String resultString = result.andReturn().getResponse().getContentAsString();
+
+        JacksonJsonParser jsonParser = new JacksonJsonParser();
+        return jsonParser.parseMap(resultString).get("access_token").toString();
+    }
+    */
 }
