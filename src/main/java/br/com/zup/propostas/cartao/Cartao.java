@@ -1,7 +1,7 @@
 package br.com.zup.propostas.cartao;
 
+import br.com.zup.propostas.bloqueios.BloqueioCartao;
 import br.com.zup.propostas.proposta.Proposta;
-import com.zaxxer.hikari.util.ConcurrentBag;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,8 +31,14 @@ public class Cartao {
     @OneToOne
     private Proposta proposta;
 
+    @Enumerated(EnumType.STRING)
+    private StatusCartao status = StatusCartao.DESBLOQUEADO;
+
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.PERSIST)
     private List<Biometria> biometrias = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cartao")
+    private List<BloqueioCartao> bloqueios;
 
     @Deprecated
     public Cartao() {
@@ -47,11 +53,15 @@ public class Cartao {
         this.proposta = proposta;
     }
 
-    public void associaBiometria(String biometria) {
-        this.biometrias.add(new Biometria(this, biometria));
+    public void bloquear() {
+        status = StatusCartao.BLOQUEADO;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getNumero() {
+        return numero;
     }
 }

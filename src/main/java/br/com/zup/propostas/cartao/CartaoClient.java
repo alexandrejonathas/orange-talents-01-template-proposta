@@ -8,4 +8,7 @@ public interface CartaoClient {
 
     @GetMapping("/api/cartoes")
     NovoCartaoResponse consulta(@RequestParam Long idProposta);
+
+    @PostMapping("/api/cartoes/{id}/bloqueios")
+    BloqueioCartaoResponse bloqueio(@PathVariable String id, @RequestBody BloqueioCartaoRequest request);
 }
