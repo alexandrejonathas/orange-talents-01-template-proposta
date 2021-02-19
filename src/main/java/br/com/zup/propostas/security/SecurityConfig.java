@@ -14,7 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/actuator/health").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/propostas/**").hasAuthority("SCOPE_read")
                 .antMatchers(HttpMethod.POST, "/propostas/**").hasAuthority("SCOPE_write")
                 .anyRequest().authenticated()
