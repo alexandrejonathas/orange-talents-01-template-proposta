@@ -1,4 +1,4 @@
-package br.com.zup.propostas.cartao;
+package br.com.zup.propostas.bloqueios;
 
 public class BloqueioCartaoRequest {
 

@@ -28,7 +28,7 @@ public class ConsultaCartaoTask {
     @Autowired
     private CartaoClient cartaoClient;
 
-    @Scheduled(fixedRateString = "${proposta.consulta-cartao.fixedRateString}")
+    @Scheduled(fixedDelayString = "${proposta.consulta-cartao.fixedDelayString}")
     public void consultaCartaoDasPropostasElegiveis() {
         List<Proposta> propostas = repository.findAllElegiveisSemCartao();
         for(Proposta proposta : propostas) {

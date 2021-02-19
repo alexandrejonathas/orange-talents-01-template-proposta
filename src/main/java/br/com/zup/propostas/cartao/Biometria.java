@@ -17,6 +17,7 @@ public class Biometria {
     private Cartao cartao;
 
     @NotBlank
+    @Column(columnDefinition = "text")
     private String biometria;
 
     public Biometria(Cartao cartao, String biometria) {
