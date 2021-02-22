@@ -23,6 +23,7 @@
 		<spring-cloud.version>2020.0.1</spring-cloud.version>
 		<common-codec.version>1.9</common-codec.version>
 		<spring-security-oauth2.version>2.4.2</spring-security-oauth2.version>
+		<opentracing-spring-jager.version>3.3.1</opentracing-spring-jager.version>
 	</properties>	
 	
 	<dependencies>
@@ -94,6 +95,12 @@
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-spring-jaeger-web-starter</artifactId>
+			<version>${opentracing-spring-jager.version}</version>
 		</dependency>
 
 	</dependencies>

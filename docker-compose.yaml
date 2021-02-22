@@ -154,6 +154,9 @@ services:
       - CONSULTA_CARTAO_FIXED_RATE=10000
       - KEYCLOAK_ISSUER_URI=http://keycloak:8080/auth/realms/nosso-cartao
       - KEYCLOAK_JWK_URI=http://keycloak:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
+      - JAEGER_ENABLED=true
+      - JAEGER_SAMPLER=1
+      - JAEGER_ENDPOINT=http://jaeger:14268/api/traces
 
   proposta-db:
     image: 'mysql:5.7'
