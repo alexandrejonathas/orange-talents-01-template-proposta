@@ -20,8 +20,6 @@ public class ConsultaCartaoTask {
 
     private static final Logger log = LoggerFactory.getLogger(ConsultaCartaoTask.class);
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
     @Autowired
     private PropostaRepository repository;
 

@@ -111,7 +111,8 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-     - prometheus-volume:/etc/prometheus/
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - prometheus-volume:/etc/prometheus/
     network_mode: bridge
     ports:
       - "9090:9090"
@@ -138,6 +139,7 @@ services:
   proposta-api:
     image: alexandrejonathas/proposta-api
     container_name: proposta-api
+    #network_mode: bridge
     ports:
       - 8080:8080
     depends_on:

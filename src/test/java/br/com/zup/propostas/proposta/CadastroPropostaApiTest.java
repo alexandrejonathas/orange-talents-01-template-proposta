@@ -153,7 +153,6 @@ public class CadastroPropostaApiTest {
         ResultActions result
                 = mockMvc.perform(post("http://localhost:18080/auth/realms/nosso-cartao/protocol/openid-connect/token")
                 .params(params)
-                .with(httpBasic ( "joao" , "123" ))
                 .accept("application/json;charset=UTF-8"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"));
