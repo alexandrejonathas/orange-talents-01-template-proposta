@@ -32,7 +32,8 @@ public class BloqueioCartaoController {
     private RequestHeadersUtil headersUtil;
 
     @PutMapping("/cartoes/{id}/bloqueio")
-    public ResponseEntity<?> bloqueio(@PathVariable Long id, HttpServletRequest request) {
+    public ResponseEntity<?> bloqueio(@PathVariable Long id,
+                                      HttpServletRequest request) {
         Optional<Cartao> possivelCartao = cartaoRepository.findById(id);
 
         if(possivelCartao.isEmpty()) {
@@ -50,7 +51,7 @@ public class BloqueioCartaoController {
 
         cartao.bloquear();
         Map<String, String> headers = headersUtil.getRequestHeaders(request);
-        BloqueioCartao bloqueio = new BloqueioCartao(cartao, headers.get("ip"), headers.get("user-agent"));
+        BloqueioCartao bloqueio = new BloqueioCartao(cartao, request.getRemoteAddr(), request.getHeader("User-Agent"));
         bloqueioRepository.save(bloqueio);
 
         return ResponseEntity.ok().build();

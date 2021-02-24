@@ -8,18 +8,18 @@ import javax.validation.constraints.NotBlank;
 public class NovaBiometriaRequest {
 
     @NotBlank
-    private String text;
+    private String biometria;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public NovaBiometriaRequest(@NotBlank String text) {
-        this.text = text;
+        this.biometria = biometria;
     }
 
     public boolean estaEmBase64() {
-        return Base64.isBase64(text.getBytes());
+        return Base64.isBase64(biometria.getBytes());
     }
 
     public String getText() {
-        return text;
+        return biometria;
     }
 }

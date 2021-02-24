@@ -1,10 +1,12 @@
 package br.com.zup.propostas.carteiras;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class CarteiraRequest {
 
+    @Email
     @NotBlank
     private String email;
 

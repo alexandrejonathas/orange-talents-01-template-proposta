@@ -3,16 +3,14 @@ package br.com.zup.propostas.proposta;
 import java.net.URI;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 import br.com.zup.propostas.cartao.CartaoClient;
+import br.com.zup.propostas.comum.CryptDecryptUtil;
 import br.com.zup.propostas.exceptionhandler.FieldErrorOutput;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +31,9 @@ public class CadastroPropostaController {
 
 	@Autowired
 	private CartaoClient cartaoClient;
+
+	@Autowired
+	private CryptDecryptUtil dataCryptUtil;
 
 	@PostMapping("/propostas")
 	public ResponseEntity<?> cadastra(@RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder uriBuilder) throws InterruptedException {

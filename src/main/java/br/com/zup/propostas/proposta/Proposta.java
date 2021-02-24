@@ -2,6 +2,7 @@ package br.com.zup.propostas.proposta;
 
 import br.com.zup.propostas.cartao.Cartao;
 import br.com.zup.propostas.cartao.NovoCartaoResponse;
+import br.com.zup.propostas.comum.CryptoConverter;
 
 import java.math.BigDecimal;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+
 @Entity
 @Table(name = "propostas")
 public class Proposta {
@@ -19,8 +21,10 @@ public class Proposta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank 
+
+	@NotBlank
+	@Convert(converter = CryptoConverter.class)
+	@Column(unique = true)
 	private String documento;
 
 	@NotBlank 
