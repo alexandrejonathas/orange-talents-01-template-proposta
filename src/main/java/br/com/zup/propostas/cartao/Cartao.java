@@ -2,6 +2,7 @@ package br.com.zup.propostas.cartao;
 
 import br.com.zup.propostas.avisos.Aviso;
 import br.com.zup.propostas.avisos.NovoAvisoRequest;
+import br.com.zup.propostas.biometria.Biometria;
 import br.com.zup.propostas.bloqueios.BloqueioCartao;
 import br.com.zup.propostas.comum.RequestHeadersUtil;
 import br.com.zup.propostas.proposta.Proposta;

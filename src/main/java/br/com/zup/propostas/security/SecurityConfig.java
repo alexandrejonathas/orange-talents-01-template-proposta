@@ -17,6 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/propostas/**").hasAuthority("SCOPE_read")
                 .antMatchers(HttpMethod.POST,"/propostas/**").hasAuthority("SCOPE_write")
+                .antMatchers(HttpMethod.GET,"/cartoes/**").hasAuthority("SCOPE_read")
+                .antMatchers(HttpMethod.POST,"/cartoes/**").hasAuthority("SCOPE_write")
                 .anyRequest().authenticated()
                 .and()
                 .cors().disable()

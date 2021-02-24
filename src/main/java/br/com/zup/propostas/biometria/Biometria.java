@@ -1,4 +1,6 @@
-package br.com.zup.propostas.cartao;
+package br.com.zup.propostas.biometria;
+
+import br.com.zup.propostas.cartao.Cartao;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

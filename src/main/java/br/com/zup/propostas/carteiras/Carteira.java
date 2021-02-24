@@ -3,6 +3,7 @@ package br.com.zup.propostas.carteiras;
 import br.com.zup.propostas.cartao.Cartao;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +19,7 @@ public class Carteira {
     @ManyToOne
     private Cartao cartao;
 
+    @Email
     @NotBlank
     private String email;
 
