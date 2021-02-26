@@ -47,6 +47,10 @@ public class BloqueioCartaoController {
             Map<String, Object> errors = new HashMap<>();
             errors.put("violacaoRegraDeNegocio", "O cartão já está bloqueado!");
             return ResponseEntity.unprocessableEntity().body(errors);
+        }catch (FeignException e){
+            Map<String, Object> errors = new HashMap<>();
+            errors.put("violacaoRegraDeNegocio", "Não foi possivel proseguir com a solicitação!");
+            return ResponseEntity.unprocessableEntity().body(errors);
         }
 
         cartao.bloquear();

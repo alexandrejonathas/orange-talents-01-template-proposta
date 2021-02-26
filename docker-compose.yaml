@@ -148,7 +148,7 @@ services:
       - contas
       - keycloak
     environment:
-      - DATABASE_URL=jdbc:mysql://proposta-db:3306/propostas?createDatabaseIfNotExist=true
+      - DATABASE_URL=jdbc:mysql://proposta-db:3306/propostas?createDatabaseIfNotExist=true&serverTimezone=UTC
       - DATABASE_USERNAME=root
       - DATABASE_PASSWORD=root
       - ANALISE_HOST=analise:9999
